@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System </title>
+    <style>
+        #navbar {
+            height: 70px;
+            width: 100%;
+            border: 1px solid black;
+        }
+
+        #navbar>a{
+            width: 100px;
+            margin-top: 22px
+        }
+       #container{
+            border: 1px solid black;
+            width: 25%;
+            margin: auto auto;
+            justify-content: center;
+            text-align: center;
+        }
+        input{
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a href="dashboard.html"> Dashboard </a>
+    </div>
+   <div id="container">
+    <form action="" id="st_form">
+        <input type="text" placeholder="Enter your Name" id="name"> <br>
+        <input type="text" placeholder="Enter your course" id="course"> <br>
+        <input type="number" placeholder="Enetr your unit" id="unit"> <br>
+        <input  type="img" placeholder="Enter you image url" id="img"> <br>
+        <input type="text" placeholder="Enter your Batch" id="batch"> <br>
+        <input type="submit" placeholder="Submit" id="sub"> <br>
+        </form>
+</div>
+</body>
+</html>
+<Script>
+    document.querySelector("form").addEventListener("submit",student_data);
+function student_data(event){
+    event.preventDefault();
+       
+    let arr= JSON.parse(localStorage.getItem("student_data"))||[];
+
+    let form = document.querySelector("#st_form");
+    let name= form.name.value;
+    let cour = form.course.value;
+    let unit= form.unit.value;
+    let img= form.img.value;
+    let batch =form.batch.value;
+    let student_details = new st_data(name,cour,unit,img,batch);
+    arr.push(student_details);
+    console.log(arr);
+    localStorage.setItem("student_data",JSON.stringify(arr));
+}
+    function st_data(name,cour,unit,img,batch){
+        this.name=name;
+        this.course=cour;
+        this.unit = unit;;
+        this.img=img;
+        this.batch =`ft-web ${batch}`;
+    }
+
+    // name, course, unit, image and batch.
+</Script>

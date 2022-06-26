@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Dashboard </title>
+    <style>
+        table{
+            border-collapse: collapse;
+             width: 100%; 
+            margin-top: 50px;
+        }
+        table,
+        tr,
+        th{
+            border: 1px solid;
+            text-align: center;
+            width: 25%;
+        }
+
+        th,
+        td{
+            padding : 20px;
+            border: 1px solid;
+            
+        }
+        img{
+            width: 100px;
+            height: 100px;
+        }
+        #nav{
+            display: flex;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+      table{
+        margin: auto;
+      }
+      th{
+
+        
+        background-color: rgb(208, 0, 255);
+      }
+     #rem{
+      margin: auto;
+      margin-top: 0%;
+      }
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <a href="student_mangement.html"> Home Page</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th> Name</th>
+                <th> course</th>
+                <th> Unit </th>
+                <th> Student Image </th>
+                <th> Batch </th>
+                <th> Student</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+    
+</body>
+</html>
+<script>
+    let details =JSON.parse(localStorage.getItem("student_data"));
+    display_nav();
+    function display_nav(){
+        let div= document.createElement("div");
+        let obj={};
+
+        for(let i=0; i<details.length;i++){
+        let key=details[i].batch;
+        if(obj[key]===undefined){
+            obj[key]=1;
+        }
+        else{
+            obj[key]++;
+        }
+    }
+    //console.log(obj);
+    for(let i in obj){
+        div.append("||"+" "+" "+i+"-"+ obj[i]+"||"+" "+" ")
+    }
+    document.querySelector("#nav").append(div);
+    }
+    display_table();
+    function display_table(){
+        
+        document.querySelector("#tbody").innerHTML="";
+    details.forEach(function(ele,index){
+        let tr = document.createElement("tr");
+
+        let td1= document.createElement("td");
+        td1.innerText=ele.name;
+
+        let td2= document.createElement("td");
+        td2.innerText=ele.course;
+
+        let td3 =document.createElement("td");
+        td3.innerText=ele.unit;
+
+        let td4 = document.createElement("img");
+        
+        td4.setAttribute('src',ele.img);
+        
+
+
+        let td5 = document.createElement("td");
+        td5.innerText = ele.batch;
+        // console.log(td1,td2,td3,td4,td5)
+
+        let btn= document.createElement("button");
+        btn.innerText="REMOVE";
+        btn.setAttribute("id", "rem")
+        btn.addEventListener("click", function(){
+            remove(index);
+        })
+        tr.append(td1,td2,td3,td4,td5,btn);
+        document.querySelector("#tbody").append(tr);
+
+        
+    });
+}
+    // name, course, unit, image and batch.
+
+    function remove(index){
+        localStorage.setItem("trash", JSON.stringify(details));
+        
+     details.splice(index,1);
+    localStorage.setItem("student_data", JSON.stringify(details));
+      //bellow line will automatically refresh the browser
+      window.location.reload()
+    }
+</script>
